@@ -4,7 +4,7 @@
   <title><![CDATA[Asymptotic]]></title>
   <link href="http://anirvan-majumdar.github.io/atom.xml" rel="self"/>
   <link href="http://anirvan-majumdar.github.io/"/>
-  <updated>2013-07-23T20:54:34+05:30</updated>
+  <updated>2013-07-24T00:54:30+05:30</updated>
   <id>http://anirvan-majumdar.github.io/</id>
   <author>
     <name><![CDATA[Anirban]]></name>
@@ -18,11 +18,96 @@
     <link href="http://anirvan-majumdar.github.io/blog/2013/07/23/starting-off/"/>
     <updated>2013-07-23T19:44:00+05:30</updated>
     <id>http://anirvan-majumdar.github.io/blog/2013/07/23/starting-off</id>
-    <content type="html"><![CDATA[<p>It took my surprisingly longer than expected to generate this first post.
-The primary issue ended up being the manner in which I was trying to
-set up my Github pages. It&rsquo;s a bit convoluted, and I had to end up hacking
-the <code>.git/config</code> file. I&rsquo;m sure this wouldn&rsquo;t have been required if I had
-just concentrated hard enough. Like laser hard!</p>
+    <content type="html"><![CDATA[<p>So well, I&rsquo;m trying (<em>yet again</em>) to sit down and write and express things
+through a nifty blogging mechanism — <em>Octopress</em>. Why I chose this over
+Wordpress?</p>
+
+<ul>
+<li>Hmm, I think it has a bit to do with the fact that this was
+somewhat harder to setup — <em>hence</em>, the novelty factor.</li>
+<li>As an author I can control far more things, far easier. Like the placing
+of text blocks and images.</li>
+<li><em>Code blocks</em> — oh they render so well. I know there&rsquo;s
+<a href="http://wordpress.org/plugins/prettify-code-syntax/">prettify</a> and what not
+on WP, but the fact remains, it&rsquo;s all baked into Octo already.<br/>
+Case in point &mdash;</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;this ought to look nice!&quot;</span><span class="o">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Writing and formatting stuff in <em>markdown</em> is way more natural than in WP.</li>
+<li>No database required!</li>
+<li>The installation and deployment process takes one through the narrow and
+often winding lanes of github (i.e, if you chose to host it on <a href="http://pages.github.com">pages</a>,
+ruby, git, saas, yaml, and some more which I&rsquo;ve ignored right now.</li>
+<li>and of course, it&rsquo;s got this whole <em>geeky</em> feel to it. There&rsquo;s this sense of
+accomplishment associated with the whole process.</li>
+<li>free deployment against your own <a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">custom URL</a>
+using Github pages. Last I saw, WP was charging for that!</li>
+</ul>
+
+
+<h4>It&rsquo;s not all easy-peasy though!</h4>
+
+<p>From the point you decide to have an Octo blog, to finally having one deployed
+can be quite a handful. Especially more so, if you got a bit self assured of
+your own obvious intelligence. Well I did.<br/>
+I was using a Mac, and the first thing is to get Ruby 1.9.3 installed. It was no
+fun, since I apparently had Ruby 1.8.x preinstalled, and didn&rsquo;t have much clue
+how to go about uninstalling it. Suggestions on the web generally indicated that
+all you need to do is change the <code>PATH</code> variable. But then, I ran into some
+shit storm since I didn&rsquo;t have <code>gcc</code> installed for compiling the binaries. This
+is because I recently updated my XCode, and that took away the command lines
+tools installed before. So before I could figure that out, I had gotten into
+MacPorts, Homebrew and Fink. They all were basically puking into each others
+dependencies. And it all had to undone.</p>
+
+<blockquote><p>First thing to make sure &mdash; have you got your command line tools installed<br/>on XCode?</p></blockquote>
+
+
+<p><img class="center" src="http://i.imgur.com/I0yhAZa.png" width="500" height="366"></p>
+
+<p>Once the <code>gcc</code> is taken care of, the next thing I got entangled with was Github
+pages. This part, I believe, had more to do with my impatience than any real
+issue as such. You need to be a little careful about the documentation and how
+the folder structure of your Octo clone maps to Github pages.
+When you do a <code>git clone</code> on the original Octo repo, you get what is known as
+the root directory. When you run the standard Octo <code>rake</code> commands, like
+<code>generate</code>, <code>deploy</code>, etc, another directory <code>_deploy</code> is created within the <code>source</code>
+directory. This <code>_deploy</code> directory is <em>also</em> a valid git project.<br/>
+Now, on the Github pages side of things, depending on what kind of blog you
+want to float &ndash; personal, official, team &ndash; you&rsquo;ll need to <a href="https://github.com/new">create a new repository</a>
+for that. Now, the <code>master</code> branch should map to the <code>_deploy</code> folder, while
+a new branch <code>source</code> should map to the root folder. If all this sounds a bit
+hard to follow, just be sure that you fire the <code>rake</code> commands in the correct
+order as instructed in the documentation.</p>
+
+<blockquote><p>Don&#8217;t make the mistake of fiddling around with the root folder setting in the<br/>_config.yml file, or through the rake set_root_dir[] command before getting<br/>your blog live!</p></blockquote>
+
+
+<p>If you do something like that, chances are, your JS, CSS and other linked files
+will not get resolved properly. In case you&rsquo;ve done anything like that, make
+sure that the <code>root</code> setting under Jekyll parameters in the <code>_config.yml</code> file
+is set to empty. And then, execute the commant <code>rake set_root_dir[/]</code> to fix
+the relative paths generated in the generated <code>index.html</code> file.</p>
+
+<h4>Getting to See the Damn Thing</h4>
+
+<p>You can view the blog locally before pushing it live. To do so, use the
+<code>rake generate</code> and then <code>rake preview</code> command. Then access your blog at
+<a href="http://localhost:4000">localhost:4000</a>. You can even edit your posts in
+realtime and review the changes.<br/>
+To deploy your blog live on Github pages, use the command <code>rake deploy</code> (assuming
+you have already run <code>rake generate</code> before). This will create all the new
+files in the <code>_deploy</code> folder and push these files to the <code>master</code> branch
+on your Github pages repository. All you need to do then is access your
+live blog at <code>http://&lt;github-username&gt;.github.com</code> (the <code>.com</code> or <code>.io</code> is the same
+thing. No difference.)</p>
 ]]></content>
   </entry>
   
