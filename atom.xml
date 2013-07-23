@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Asymptotic]]></title>
+  <link href="http://anirvan-majumdar.github.io/atom.xml" rel="self"/>
+  <link href="http://anirvan-majumdar.github.io/"/>
+  <updated>2013-07-23T20:54:34+05:30</updated>
+  <id>http://anirvan-majumdar.github.io/</id>
+  <author>
+    <name><![CDATA[Anirban]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Starting off]]></title>
+    <link href="http://anirvan-majumdar.github.io/blog/2013/07/23/starting-off/"/>
+    <updated>2013-07-23T19:44:00+05:30</updated>
+    <id>http://anirvan-majumdar.github.io/blog/2013/07/23/starting-off</id>
+    <content type="html"><![CDATA[<p>It took my surprisingly longer than expected to generate this first post.
+The primary issue ended up being the manner in which I was trying to
+set up my Github pages. It&rsquo;s a bit convoluted, and I had to end up hacking
+the <code>.git/config</code> file. I&rsquo;m sure this wouldn&rsquo;t have been required if I had
+just concentrated hard enough. Like laser hard!</p>
+]]></content>
+  </entry>
+  
+</feed>
