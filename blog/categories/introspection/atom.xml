@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Asymptotic]]></title>
-  <link href="http://anirvan-majumdar.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: introspection | Asymptotic]]></title>
+  <link href="http://anirvan-majumdar.github.io/blog/categories/introspection/atom.xml" rel="self"/>
   <link href="http://anirvan-majumdar.github.io/"/>
   <updated>2013-07-26T18:12:35+05:30</updated>
   <id>http://anirvan-majumdar.github.io/</id>
