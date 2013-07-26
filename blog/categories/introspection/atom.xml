@@ -4,7 +4,7 @@
   <title><![CDATA[Category: introspection | Asymptotic]]></title>
   <link href="http://anirvan-majumdar.github.io/blog/categories/introspection/atom.xml" rel="self"/>
   <link href="http://anirvan-majumdar.github.io/"/>
-  <updated>2013-07-26T18:12:35+05:30</updated>
+  <updated>2013-07-26T19:51:53+05:30</updated>
   <id>http://anirvan-majumdar.github.io/</id>
   <author>
     <name><![CDATA[Anirban]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Slowing Things Down]]></title>
+    <title type="html"><![CDATA[Things of Past]]></title>
     <link href="http://anirvan-majumdar.github.io/blog/2013/07/26/slowing-things-down/"/>
     <updated>2013-07-26T18:04:00+05:30</updated>
     <id>http://anirvan-majumdar.github.io/blog/2013/07/26/slowing-things-down</id>
@@ -31,7 +31,106 @@ post isn&rsquo;t about the reasons which led to its eventual end (that&rsquo;ll 
 some time later), but more about what all I got to learn, and what I have in
 mind henceforth.</p>
 
-<h6>Things We Built</h6>
+<h4>Things We Built</h4>
+
+<p>LoReMo was meant to be a product for users to keep track of their engagement
+with different brands. The primary aspects of engagement involved &mdash;</p>
+
+<ol>
+<li><em>Deals</em> &ndash; merchants would keep users informed of deals running at
+their stores. Also, these deals could be targeted based on parameters selected
+by the merchant.</li>
+<li><em>Rewards</em> &ndash; a simple rewards points-based strategy to indicate when
+users were eligible for free rewards. These points were earned against
+transactions, and other activities like sharing merchant deals on social networks,
+inviting friends, reviewing a merchant, etc. We felt in the current context
+of smart devices, merchants do stand to gain a lot from incentivizing different
+mediums of engagement than relying solely on the age old custom of transactions.</li>
+</ol>
+
+
+<p>Users got to use a smartphone app, while merchants got a web-based dashboard
+to track and analyse things.</p>
+
+<p>Just <em>reiterating</em> again &ndash; this post isn&rsquo;t about what went wrong.</p>
+
+<p>Alright, so where were we? Oh yeah, things we built. To realise this product,
+we planned to get ourselves on all the smartphone platforms (which isn&rsquo;t really the wisest
+things to do in hindsight). The following were the major chunks where our efforts
+got invested &mdash;</p>
+
+<ol>
+<li><em>Apps</em> &ndash; one for each of the platforms &ndash; Android, iOS, Windows Phone and
+Blackberry.</li>
+<li>A backend <em>REST server</em> capable of scaling easily, and responsible for serving
+the data requested by the app users.</li>
+<li>A pair of <em>replicating MySQL databases</em> to provide some sort of simple redundancy,
+and enhanced speed. We split our read and write calls between these 2 DB servers
+and saw a lot of gain.</li>
+<li><em>Distributed caching mechanism</em> &ndash; which provided a lot of boost to our
+REST servers' capability to respond. Most of the inbound requests were afterall
+read-oriented.</li>
+<li><em>Jobs scheduler</em> &ndash; this wasn&rsquo;t part of original plan, but quickly we
+realised the need for having this. This nifty piece of software did a bunch of
+batch processing for computing user behaviour, sending out automated SMS&rsquo;s and
+mailers, and running data integrity checks.</li>
+<li><em>Merchant dashboard</em> &ndash; a fairly non-trivial web application which was
+used by the merchants to primarily fill up form based data related to deals,
+rewards, stores and reward points strategies.</li>
+</ol>
+
+
+<p>All in all, the last 26 months were spent on setting up these 6 disparate systems
+and perfecting them. Eventually, our efforts did get concentrated on a few, but
+each one of them got their fair share of attention every once in a while.<br/>
+The tech stack we used primarily involved the following &mdash;</p>
+
+<ol>
+<li><em>Languages</em> &ndash; A whole lot of <code>Java</code>, <code>Objective C</code>, <code>C#</code> and <code>Javascript</code>.</li>
+<li><em>Servers</em> &ndash; We made use of <code>Tomcats</code> which were customised to allow distributed
+sessions, allowing us to load balance them behind an <code>Apache 2.4</code> web server. <code>mod_jk</code> FTW!</li>
+<li><em>Caching</em> &ndash; we made use of the excellent <code>Hazelcast</code> library to achieve this. We
+had evaluated <code>memcached</code> and <code>ehcache</code> too. But eventually <code>hazelcast</code> came through
+because of its ability to run within an existing Java process, and the availability of
+a centralized <code>management-center</code> portal, which allowed us to view and manage caches.</li>
+<li><em>Persistence</em> &ndash; we used replicating set of MySQL databases, and another replicating
+set of <code>MongoDB</code> servers. The <code>MySQL</code> servers provided the primary persistence store for
+all clients, while the <code>MongoDB</code> was brought in primarily to cater to unstructured data
+and geo-spatial lookup of location based data.</li>
+<li><em>UI</em> &ndash; for the apps, our focus was usually on the Android version, and then we
+would port the features, both functional and visual, to the other platforms. This was an
+immense drag on our resources, but that was something we had a fair idea about and went
+ahead in spite of the obvious downsides.<br/>
+For the web application user interface, we relied on <code>Bootstrap</code> in a big way, and made use
+of the beautiful <code>Highcharts</code> charting JS library for analytics.</li>
+<li><em>Search</em> &ndash; initially we relied on MySQL&rsquo;s index-based searches, but soon, the
+inflexibility of writing and combining different resultsets led us to <code>lucene</code>.</li>
+<li><em>Testing</em> &ndash; we never really ventured into the unit testing world — bar some
+functions which certainly led them to be unit tested. Our focus had primarily been
+on the performance parameters of the REST application when a whole lot requests hit it.
+To determine the stability of the system in the face of good number of requests, we relied
+on the super performant <code>grinder</code> framework. It worked as a charm and allowed us to test
+various kinds of loads. We tested against burst loads (500 users at a time), sustained loads
+(10 million requests over 5 days of running). The way our application performed against
+Grinder gave us an immense degree of confidence. And in the long run, it turned out to
+be a great source of stability for the platform too.</li>
+<li><em>SCM</em> &ndash; we relied on ever trusty <code>Git</code> for this purpose. And it never-ever failed us!
+Initially we had our own centralized server, which we set up using <code>gitolite</code>, until our
+server kept failing us repeatedly. your scm server is one thing you don&rsquo;t want to keep
+failing on you, esp when you&rsquo;ve got a team working on many different things. True, I could&rsquo;ve
+hosted the entire thing on my laptop, but then, most of us were working from home most of the
+time, and I really didn&rsquo;t want people not to commit stuff upstream just because they couldn&rsquo;t
+connect to the central repo. Finally we moved to the brilliant <code>gitlab</code> hosted service. It&rsquo;s
+free, and borrows a lot of its functionalities from Github. Very easy and reliable. However,
+the web portal is a tad bit slow.</li>
+</ol>
+
+
+<p>So that&rsquo;s how things were laid out for LoReMo. Almost everything besides the first iterations
+of the apps and the REST server came into place in an incremental and totally need-to-have
+basis. Of course, at the end, we did allow ourselves some luxuries which weren&rsquo;t really a
+necessity, like the distributed cache. But what the heck, we thought it would&rsquo;ve been nice
+to have, and it took just a week to put it in.</p>
 ]]></content>
   </entry>
   
